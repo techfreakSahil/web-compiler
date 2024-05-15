@@ -1,0 +1,7 @@
+services:
+  rust-compiler:
+    build:
+      context: .
+      dockerfile: Dockerfile.rust
+    volumes:
+      - ./temp:/app
