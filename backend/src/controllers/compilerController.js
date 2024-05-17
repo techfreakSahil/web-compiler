@@ -2,6 +2,7 @@ const { exec } = require("child_process");
 const fs = require("fs");
 const solc = require("solc");
 const path = require("path");
+const mo = require("motoko");
 const { solidityCompiler } = require("../views/solidityCompiler");
 
 const compileCode = (req, res) => {
@@ -17,6 +18,9 @@ const compileCode = (req, res) => {
   } else if (language === "solidity") {
     const output = solidityCompiler(code);
     res.json({ output: output });
+  } else if (language === "motoko") {
+    mo.write("Main.mo", code);
+    res.json(mo.run("Main.mo").stdout);
   } else {
     return res.status(400).json({ error: "Unsupported language" });
   }
